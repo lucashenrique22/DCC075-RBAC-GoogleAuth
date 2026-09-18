@@ -1,0 +1,18 @@
+/**
+ * Permissões disponíveis no sistema.
+ *
+ * Cada permissão representa uma ação que um usuário
+ * pode ou não executar.
+ */
+export const PERMISSIONS = {
+    USUARIO_VISUALIZAR: 'USUARIO_VISUALIZAR',
+    USUARIO_CRIAR: 'USUARIO_CRIAR',
+    USUARIO_EDITAR: 'USUARIO_EDITAR',
+    USUARIO_EXCLUIR: 'USUARIO_EXCLUIR',
+
+    RELATORIO_VISUALIZAR: 'RELATORIO_VISUALIZAR',
+    RELATORIO_CRIAR: 'RELATORIO_CRIAR',
+    RELATORIO_EXCLUIR: 'RELATORIO_EXCLUIR',
+
+    SISTEMA_CONFIGURAR: 'SISTEMA_CONFIGURAR'
+};
