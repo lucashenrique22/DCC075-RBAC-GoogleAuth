@@ -6,9 +6,9 @@ import { PERMISSIONS } from './permissions.js';
  */
 export const ROLES = {
     ADMINISTRADOR: {
-        nome: 'Administrador',
+        name: 'Administrador',
 
-        permissoes: [
+        permissions: [
             PERMISSIONS.USUARIO_VISUALIZAR,
             PERMISSIONS.USUARIO_CRIAR,
             PERMISSIONS.USUARIO_EDITAR,
@@ -23,9 +23,9 @@ export const ROLES = {
     },
 
     GERENTE: {
-        nome: 'Gerente',
+        name: 'Gerente',
 
-        permissoes: [
+        permissions: [
             PERMISSIONS.USUARIO_VISUALIZAR,
 
             PERMISSIONS.RELATORIO_VISUALIZAR,
@@ -35,9 +35,9 @@ export const ROLES = {
     },
 
     COORDENADOR: {
-        nome: 'Coordenador',
+        name: 'Coordenador',
 
-        permissoes: [
+        permissions: [
             PERMISSIONS.RELATORIO_VISUALIZAR,
             PERMISSIONS.RELATORIO_CRIAR
         ]
