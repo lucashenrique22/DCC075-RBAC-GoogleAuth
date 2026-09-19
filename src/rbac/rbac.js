@@ -8,12 +8,12 @@ import { ROLES } from './roles.js';
  * @returns {boolean} true caso o papel possua a permissão.
  */
 export function hasPermission(role, permission) {
-    const role = ROLES[role];
+    const roleDefinition = ROLES[role];
 
     // Caso o papel não exista, o acesso deve ser negado.
-    if (!role) {
+    if (!roleDefinition) {
         return false;
     }
 
-    return role.permissions.includes(permission);
+    return roleDefinition.permissions.includes(permission);
 }
