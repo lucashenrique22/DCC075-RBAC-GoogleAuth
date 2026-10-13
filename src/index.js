@@ -1,23 +1,67 @@
-import { PERMISSIONS } from './rbac/permissions.js';
-import { hasPermission } from './rbac/rbac.js';
-import { getUserByEmail } from './users/users.js';
+import express from 'express';
 
-const usuario = getUserByEmail('gerente@empresa.com');
+import {
+    gerarUrlAutenticacao,
+    autenticarComGoogle
+} from './auth/google.js';
 
-console.log('Usuário:', usuario.name);
-console.log('Papel:', usuario.role);
+const app = express();
+const PORT = 3000;
 
-console.log(
-    'Pode visualizar usuários:',
-    hasPermission(usuario.role, PERMISSIONS.USUARIO_VISUALIZAR)
-);
+/**
+ * Página inicial.
+ *
+ * Gera a URL de autenticação do Google e
+ * disponibiliza o link para o usuário.
+ */
+app.get('/', (req, res) => {
+    const url = gerarUrlAutenticacao();
 
-console.log(
-    'Pode excluir usuários:',
-    hasPermission(usuario.role, PERMISSIONS.USUARIO_EXCLUIR)
-);
+    res.send(`
+        <h1>Autenticação com Google OAuth2</h1>
 
-console.log(
-    'Pode criar relatórios:',
-    hasPermission(usuario.role, PERMISSIONS.RELATORIO_CRIAR)
-);
+        <a href="${url}">
+            Clique aqui para fazer login
+        </a>
+    `);
+});
+
+/**
+ * Callback utilizado pelo Google após a autenticação.
+ */
+app.get('/callback', async (req, res) => {
+    try {
+        const { code } = req.query;
+
+        const payload = await autenticarComGoogle(code);
+
+        const name = encodeURIComponent(payload.name);
+        const email = encodeURIComponent(payload.email);
+
+        res.redirect(`/welcome?name=${name}&email=${email}`);
+    } catch (error) {
+        console.error('Erro na autenticação:', error);
+
+        res.status(500).send(
+            'Erro ao autenticar com o Google.'
+        );
+    }
+});
+
+/**
+ * Página exibida após a autenticação.
+ */
+app.get('/welcome', (req, res) => {
+    const { name, email } = req.query;
+
+    res.send(`
+        <h1>Bem-vindo, ${name}!</h1>
+        <p>Seu e-mail: ${email}</p>
+    `);
+});
+
+app.listen(PORT, () => {
+    console.log(
+        `Servidor rodando em http://localhost:${PORT}`
+    );
+});
