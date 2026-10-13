@@ -14,15 +14,16 @@ const googleClient = new OAuth2Client(
 );
 
 /**
- * Gera a URL que será utilizada para iniciar
- * o processo de autenticação no Google.
+ * Gera a URL de autenticação do Google.
  *
- * @returns {string} URL de autenticação.
+ * O state permite vincular a resposta do Google
+ * à solicitação de login iniciada pelo usuário.
  */
-export function gerarUrlAutenticacao() {
+export function gerarUrlAutenticacao(state) {
     return googleClient.generateAuthUrl({
         access_type: 'offline',
-        scope: ['email', 'profile', 'openid']
+        scope: ['email', 'profile', 'openid'],
+        state
     });
 }
 
